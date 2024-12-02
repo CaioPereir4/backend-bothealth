@@ -10,6 +10,7 @@
   "author": "Caio Pereira",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "express": "^4.21.1",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5"
