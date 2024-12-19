@@ -16,6 +16,7 @@ class UserController {
     };
 
     async insert(req,res){
+
         const body = req.body;
         const isValidBody = await verifyUserRequestData(body);
         if(!isValidBody.sucess){
@@ -23,6 +24,15 @@ class UserController {
         };
 
         
+    };
+
+    async getBySecretKey(req,res){
+        const  { secretKey } = req.body;
+
+        const response  = await userService.findByParamater("secret_key", secretKey);
+        
+        return res.status(response.httpCode).json(response)
+
     };
 
 };
