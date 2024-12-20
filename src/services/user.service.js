@@ -29,7 +29,12 @@ class UserService {
             const user = await userRepository.findAll({where: {[paramater]: value}});
 
             if(user.length > 0) {
-                return { httpCode: 200, isUserAuthenticated: true, role: user[0].role};
+                return { 
+                    httpCode: 200,
+                    name: user[0].name,
+                    isUserAuthenticated: true,
+                    role: user[0].role
+                };
             }
 
             return { httpCode: 404, isUserAuthenticated: false, role: "not valid"};
