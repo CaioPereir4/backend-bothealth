@@ -26,6 +26,14 @@ const User = database.define(
       company : {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      thread_id : {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      messages: {
+        type: Sequelize.JSON,
+        allowNull: true
       }
     }
 );
