@@ -14,6 +14,9 @@ userRoute.post("/backend-bothealth/users/login", async (req,res) => {
     return await userController.getBySecretKey(req,res);
 }); 
 
+userRoute.post("/backend-bothealth/users", async (req,res) => {
+    return await userController.insert(req,res)
+})
 
 module.exports = {
     userRoute

@@ -23,7 +23,9 @@ class UserController {
             return res.status(400).json({ httpCode: 400, sucess: false, result: [], message: isValidBody.message});
         };
 
-        
+        await userService.create(body);
+
+        return res.status(200).json({httpCode: 200, sucess: true, result:[body], message: "Usuário criado com sucesso"});
     };
 
     async getBySecretKey(req,res){

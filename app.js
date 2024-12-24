@@ -1,9 +1,11 @@
+require("dotenv").config();
+    
 (async () => {
 
     const database = require("./db.js");
     const User = require("./user.js");
     await database.sync();
-
+    
 })();
 
 const {app} = require("./src/routes");
