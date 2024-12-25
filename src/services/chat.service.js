@@ -11,7 +11,7 @@ class ChatService {
             return { httpCode: 400, message: "Campo userId não recebido no corpo da requisicao", result : []}
         };
 
-        const userData = await userService.findByParamater("id", userId);
+        const userData = await userService.findByPk(userId);
 
         if(!userData){
             return { httpCode: 404, message: "Usário não encontrado para iniciar sessão", result : []}
@@ -43,11 +43,15 @@ class ChatService {
                 return { httpCode: 400, message: "Requisicao enviada sem os campos [userid, message] esperado", result: []};
             };
 
-            const userData = await userService.findByParamater('id', userId);
+            const userData = await userService.findByPk(userId);
 
             if(!userData){
                 return { httpCode: 404, message: "Usuário não encontrado para enviar mensagem", result: [] }
             };
+
+            if(!userData.messages){
+                return {httpCode: 404, message:"Problema ao capturar mensagens do usuários", result: []};
+            }
 
             const threadId = userData.thread_id;
             let allMessages = userData.messages;
@@ -84,7 +88,7 @@ class ChatService {
             return { httpCode: 400, message: "Campo userId não recebido no corpo da requisicao", result : []}
         };
 
-        const userData = await userService.findByParamater("id", userId);
+        const userData = await userService.findByPk(userId);
 
         if(!userData){
             return { httpCode: 404, message: "Usário não encontrado para finalizar sessão", result : []}

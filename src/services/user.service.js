@@ -14,6 +14,29 @@ class UserService {
         };
     };
 
+    async findByPk(pk){
+        try {
+            const user = await userRepository.findByPk(pk);
+            
+            if(user) {
+                return { 
+                    httpCode: 200,
+                    name: user.name,
+                    isUserAuthenticated: true,
+                    role: user.role,
+                    thread_id: user.thread_id,
+                    messages: user.messages,
+                    id: user.id
+                };
+            }
+
+            return null;
+        } catch (error){
+            console.info(`[findByPk][ERROR]: ${error.message}`);
+            return false;
+        }
+    }
+
     async create(userBody){
         try {
             const resultOfCreate = await userRepository.create(userBody);
