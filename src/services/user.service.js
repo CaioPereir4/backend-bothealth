@@ -35,7 +35,8 @@ class UserService {
                     isUserAuthenticated: true,
                     role: user[0].role,
                     thread_id: user[0].thread_id,
-                    messages: user[0].messages
+                    messages: user[0].messages,
+                    id: user[0].id
                 };
             }
 
