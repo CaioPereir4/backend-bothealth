@@ -12,6 +12,11 @@ class ChatController {
         const response = await chatService.sendMessage(req.body);
         return res.status(response.httpCode).json(response)
     };
+
+    async verifyFinishSession(req,res){
+        const response = await chatService.finishSession(req.body);
+        return res.status(response.httpCode).json(response);
+    };
 }
 
 module.exports = {

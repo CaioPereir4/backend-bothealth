@@ -36,12 +36,6 @@ class ChatService {
         return { httpCode: 200, message: "Já havia uma sessão iniciada", result: userData.messages };
     };
 
-    async generateThreadId(){
-        const url = `${BACKEND_OPEN_AI_ROUTE}/thread`;
-        const response = await axios.get(url);
-        return response.data["thread_id"];
-    };
-
     async sendMessage(requestBody){
         try {
             const { userId, message} = requestBody;
@@ -83,6 +77,49 @@ class ChatService {
             return { httpCode: 500, message: "Erro interno do servidor", result: [] };
         }
     };
+
+    async finishSession(requestBody){
+        const {userId} = requestBody;
+        if(!userId){
+            return { httpCode: 400, message: "Campo userId não recebido no corpo da requisicao", result : []}
+        };
+
+        const userData = await userService.findByParamater("id", userId);
+
+        if(!userData){
+            return { httpCode: 404, message: "Usário não encontrado para finalizar sessão", result : []}
+        };
+
+        await userService.update(userId, {
+            thread_id: null,
+            messages: null
+        });
+
+        const sucessToDeleteThread = await this.deleteThread(userData.thread_id);
+
+        if(!sucessToDeleteThread){
+            console.info(`Possível problema para deletar thread ${userData.thread_id}`);
+        }
+
+
+
+        return { httpCode: 200, message: "Sessão finalizada com sucesso", result: [] };
+
+    };
+
+    
+    async generateThreadId(){
+        const url = `${BACKEND_OPEN_AI_ROUTE}/thread`;
+        const response = await axios.get(url);
+        return response.data["thread_id"];
+    };
+
+    async deleteThread(thread){
+        const url = `${BACKEND_OPEN_AI_ROUTE}/thread/${thread}`;
+        const response = await axios.delete(url);
+        return response.data["ok"];
+    };
+    
 }
 
 module.exports = {
