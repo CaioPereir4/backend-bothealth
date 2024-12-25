@@ -8,6 +8,10 @@ chatRoute.post("/backend-bothealth/chat/startSession", async (req,res) => {
     return await chatController.verifyStartSession(req,res);
 });
 
+chatRoute.post("/backend-bothealth/chat/message", async (req,res) => {
+    return await chatController.message(req,res)
+});
+
 module.exports = {
     chatRoute
 }
