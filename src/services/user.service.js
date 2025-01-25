@@ -6,8 +6,11 @@ class UserService {
 
     async findAll(){
         try    {
-            const allUsers = await userRepository.findAll();
-            return allUsers;
+            let allUsers = await userRepository.findAll();
+            return allUsers.map(user => {
+                user.secret_key =  "*******";
+                return user
+            });
         } catch (error){
             console.info(`USERSERVICE FINDALL ERROR: ${error.message}`);
             return [];
